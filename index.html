@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Calculadora binaria</title>
+  </head>
+  <body>
+    <input type="text" id="screen">
+    <button id="0" class="digit" onclick="javascript:addDigit('0')">0</button>
+    <button id="1" class="digit" onclick="javascript:addDigit('1')">1</button>
+    <button id="add" class="operator" onclick="javascript:add()">+</button>
+    <button id="resolve" onclick="javascript:resolve()">=</button>
+    <p id="history"></p>
+  </body>
+  <script type="text/javascript">
+    var firstOp;
+
+    function addDigit(digit) {
+      var screen = document.getElementById("screen");
+      if (screen.className === "resolved") {
+        screen.value = "";
+        screen.classList.remove("resolved");
+      }
+      screen.value = screen.value + digit;
+    }
+
+    function add() {
+      var screen = document.getElementById("screen");
+      firstOp = screen.value;
+      screen.value = "";
+    }
+
+    function resolve() {
+      var screen = document.getElementById("screen");
+      var secondOp = screen.value;
+      var firstOpDec = parseInt(firstOp, 2);
+      var secondOpDec = parseInt(secondOp, 2);
+      var resultDec = firstOpDec + secondOpDec;
+      var result = resultDec.toString(2);
+      screen.value = result;
+      screen.classList.add("resolved");
+
+      document.getElementById("history").innerHTML = (
+        firstOp + " (" + firstOpDec + ") + " + secondOp + " (" + secondOpDec +
+        ") = " + result + " (" + resultDec + ")"
+      );
+    }
+  </script>
+</html>
